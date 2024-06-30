@@ -11,19 +11,14 @@ export const slices = createSlice({
     reducers: {
         addFavourite: (state, action) => {
             state.data.push(action.payload);
-            console.log("state: " );
+            console.log("New state: " );
             console.log(state.data);
             
         },
-        removeFavourite : (state, action) => {
-            state.data.find((index) => {
-                if (index === action.payload) {
-                    state.data.splice(action.payload, 1)
-                    console.log("state: " );
-                    console.log(state.data);
-                }
-            })
+        removeFavourite: (state, action) => {
+            state.data = state.data.filter(item => item.id !== action.payload.id);
         }
+
     }
 })
 

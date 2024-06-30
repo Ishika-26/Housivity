@@ -1,19 +1,19 @@
-import { FlatList, StyleSheet, Text, View, ImageSourcePropType, Image, ScrollView, Pressable } from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
-import CardData from '../hooks/CardData';
+import { FlatList, StyleSheet, Text, View, Image, ScrollView, Pressable } from 'react-native';
 import type { PropsWithChildren } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavourite, removeFavourite } from '../store/slices';
+import CardData from '../hooks/CardData';
 
 type ImageProps = PropsWithChildren<{
-    imageUrl: ImageSourcePropType
+    imageUrl: string
 }>
 
 const ImageContainer = ({ imageUrl }: ImageProps): JSX.Element => {
     return (
         <View>
-            <Image style={styles.diceImage} source={imageUrl} />
+            <Image style={styles.diceImage} source={{ uri: imageUrl }} />
         </View>
     )
 }
@@ -37,6 +37,7 @@ const Card = () => {
 
     const handlePress = (item: any) => {
         if (isWishlisted(item)) {
+
             dispatch(removeFavourite(item));
         } else {
             dispatch(addFavourite(item));
@@ -50,21 +51,25 @@ const Card = () => {
             <View style={styles.cardContainer}>
                 <ScrollView horizontal={true}>
                     {item.images.map((index: any) => (
-                        <ImageContainer imageUrl={{ uri: `https://logiqproperty.blr1.digitaloceanspaces.com/${index}` }} key={index} />
+                        <ImageContainer imageUrl={`https://logiqproperty.blr1.digitaloceanspaces.com/${index}`} key={index} />
                     ))}
                 </ScrollView>
                 <View style={styles.infoContainer}>
                     <View style={{ width: "70%" }}>
                         <View style={{ flexDirection: "row", gap: 10 }}>
-                            <View style={[styles.tagContainer]}>
-                                {item.isListed ? <Text style={styles.tagContainerText}>Listed</Text> : null}
-                            </View>
-                            <View style={[styles.tagContainer]}>
-                                {item.foodAvailability ? <Text style={styles.tagContainerText}>Food Availability</Text> : null}
-                            </View>
+                            {item.isListed && (
+                                <View style={styles.tagContainer}>
+                                    <Text style={styles.tagContainerText}>Listed</Text>
+                                </View>
+                            )}
+                            {item.foodAvailability && (
+                                <View style={styles.tagContainer}>
+                                    <Text style={styles.tagContainerText}>Food Availability</Text>
+                                </View>
+                            )}
                         </View>
                         <View style={{ marginVertical: 10 }}>
-                            <Text style={{ fontSize: 20 }}> ₹ {item.displayPrice.fixedPrice}</Text>
+                            <Text style={{ fontSize: 20 }}>₹ {item.displayPrice.fixedPrice}</Text>
                         </View>
                         <View>
                             <Text style={{ fontSize: 16, color: "black" }}>{item.name}</Text>
@@ -82,8 +87,7 @@ const Card = () => {
                 </View>
             </View>
         )
-
-    }, [wishlist]);
+    }, [wishlist, isWishlisted]);
 
     const keyExtractor = useCallback((item: any) => item.id, []);
 
