@@ -11,8 +11,6 @@ export const slices = createSlice({
     reducers: {
         addFavourite: (state, action) => {
             state.data.push(action.payload);
-            console.log("New state: " );
-            console.log(state.data);
             
         },
         removeFavourite: (state, action) => {

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingLeft: 16,
     marginBottom: 14,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   title: {
-    color: 'black',
+    color: '#000000',
     fontSize: 24
   }
 });

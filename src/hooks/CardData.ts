@@ -7,7 +7,6 @@ const CardData = async () => {
             'https://api.housivity.com/api/v1/property?city=Gandhinagar&projectType=[%22pgHostel%22]&page=1',
         );
         const json = await response.json();
-        // console.log(json);
         
         return json;
     } catch (error) {

@@ -21,7 +21,6 @@ const Home = () => {
   useEffect(() => {
     fetchData();
     // dispatch(changeTemp("changeTemp"))
-    // console.log(temp);
   },[])
   
   
